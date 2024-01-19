@@ -16,6 +16,7 @@ def recognizeSpeech():
     model_id = "models/text-bison-001"
     while True:
         with sr.Microphone() as source:
+            print("Working")
             print("Listening....")
             recognizer.adjust_for_ambient_noise(source)
             audio = recognizer.listen(source)
