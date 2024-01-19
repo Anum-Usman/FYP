@@ -16,25 +16,32 @@ def recognizeSpeech():
     model_id = "models/text-bison-001"
     while True:
         with sr.Microphone() as source:
-            print("Working")
+            # print("Working")
             print("Listening....")
             recognizer.adjust_for_ambient_noise(source)
             audio = recognizer.listen(source)
 
             try:
                 text = recognizer.recognize_google(audio).lower()
-                prompt = text
-                completion = palm.generate_text(
-                    model=model_id,
-                    prompt=prompt,
-                    temperature=0.99,
-                    max_output_tokens=800
-                )
-                text_to_speak = completion.result
-                print(completion.result)
-                engine.setProperty('rate', 150)
-                engine.say(text_to_speak)
-                engine.runAndWait()
+                if 'pakistan' in text:
+                    print(text)
+                    prompt = text
+                    completion = palm.generate_text(
+                        model=model_id,
+                        prompt=prompt,
+                        temperature=0.99,
+                        max_output_tokens=800
+                    )
+                    text_to_speak = completion.result
+                    print(completion.result)
+                    engine.setProperty('rate', 150)
+                    engine.say(text_to_speak)
+                    engine.runAndWait()
+                else:
+                    text_to_speak = "Can't Transfer the following command"
+                    engine.setProperty('rate', 150)
+                    engine.say(text_to_speak)
+                    engine.runAndWait()
             except Exception as e:
                 print(e)
 
